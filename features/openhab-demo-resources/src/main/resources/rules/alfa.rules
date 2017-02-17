@@ -1,0 +1,274 @@
+
+var dart_motion = 0
+var motion_2 = 0
+var cond_86880 = false
+var kjokkenpaa = false
+var hanson = false
+
+rule "ok"
+when
+    Item ninjablocks_motion_sensor_1910401a_trigger received update or
+    Item ninjablocks_button_62c1330d_trigger received update or
+    Item network_device_192_168_1_100_online changed to ON
+then
+  	//sendCommand(receivernadt748_receiver_45ec6c0c_power, ON)
+    sendCommand(lifx_colorlight_d073d502f5aa_power, ON)
+    sendCommand(lifx_colorlight_d073d502f675_power, ON)
+    sendCommand(lifx_colorlight_d073d502f67c_power, ON)
+    sendCommand(lifx_colorlight_d073d50352d9_power, ON)
+    sendCommand(lifx_colorlight_d073d50353f2_power, ON)
+    sendCommand(lifx_colorlight_d073d503ba98_power, ON)
+    sendCommand(lifx_colorlight_d073d503bd25_power, ON)
+    sendCommand(lifx_colorlight_d073d503be21_power, ON)
+    sendCommand(lifx_colorlight_d073d503be6b_power, ON)
+	sendCommand(artnet_node_45672867_color, ON)
+	sendCommand(artnet_node_b80e6bd6_color, ON)
+	sendCommand(artnet_node_c04f10d8_color, ON)
+	sendCommand(artnet_node_ea6e6424_color, ON)
+end
+
+//rule "viftest"
+//when
+//    Item serialmultifunction_temperature_6e286e8a_temperature changed
+//then
+//    var cmd = OFF
+//    if (serialmultifunction_temperature_6e286e8a_temperature.state > 35) {
+//        cmd = ON
+//    }    
+//    sendCommand(ninjablocks_socket_b66dc026_power, cmd)
+//end
+
+rule "Voice control"
+when
+    Item VoiceCommand received command
+then
+	var String command = VoiceCommand.state.toString.toLowerCase
+	if command.equals("lys av") {
+	  	sendCommand(home_group_3b5daeb9, OFF)
+	}
+	else if (command.equals("lys på")) {
+	  	sendCommand(home_group_3b5daeb9, ON)
+  	}
+end
+
+
+rule "bord lys"
+when
+    Item artnet_node_f7947bbd_color received command
+then
+    sendCommand(artnet_node_8db01c40_color, receivedCommand)
+end
+
+rule "marius"
+when
+    Item fa received command
+then 
+    var x_artnet_node_fbf96f11_color = artnet_node_fbf96f11_color.state
+    var x_artnet_node_f7c49632_color = artnet_node_f7c49632_color.state
+    
+    if (x_artnet_node_fbf96f11_color != OFF) {
+        sendCommand(artnet_node_fbf96f11_color, new HSBType(new DecimalType(0.0), new PercentType(100), new PercentType(100)))
+    }
+    if (x_artnet_node_f7c49632_color != OFF) {
+        sendCommand(artnet_node_f7c49632_color, new HSBType(new DecimalType(0.0), new PercentType(100), new PercentType(100)))
+    }
+
+    sendCommand(lifx_colorlight_d073d502f5aa_power, OFF)
+    sendCommand(lifx_colorlight_d073d502f675_power, OFF)
+    sendCommand(lifx_colorlight_d073d502f67c_power, OFF)
+    sendCommand(lifx_colorlight_d073d50352d9_power, OFF)
+    sendCommand(lifx_colorlight_d073d50353f2_power, OFF)
+    sendCommand(lifx_colorlight_d073d503ba98_power, OFF)
+    sendCommand(lifx_colorlight_d073d503bd25_power, OFF)
+    sendCommand(lifx_colorlight_d073d503be21_power, OFF)
+    sendCommand(lifx_colorlight_d073d503be6b_power, OFF)
+    Thread.sleep(500)
+    sendCommand(lifx_colorlight_d073d502f5aa_power, ON)
+    sendCommand(lifx_colorlight_d073d502f675_power, ON)
+    sendCommand(lifx_colorlight_d073d502f67c_power, ON)
+    sendCommand(lifx_colorlight_d073d50352d9_power, ON)
+    sendCommand(lifx_colorlight_d073d50353f2_power, ON)
+    sendCommand(lifx_colorlight_d073d503ba98_power, ON)
+    sendCommand(lifx_colorlight_d073d503bd25_power, ON)
+    sendCommand(lifx_colorlight_d073d503be21_power, ON)
+    sendCommand(lifx_colorlight_d073d503be6b_power, ON)
+    Thread.sleep(500)
+    sendCommand(lifx_colorlight_d073d502f5aa_power, OFF)
+    sendCommand(lifx_colorlight_d073d502f675_power, OFF)
+    sendCommand(lifx_colorlight_d073d502f67c_power, OFF)
+    sendCommand(lifx_colorlight_d073d50352d9_power, OFF)
+    sendCommand(lifx_colorlight_d073d50353f2_power, OFF)
+    sendCommand(lifx_colorlight_d073d503ba98_power, OFF)
+    sendCommand(lifx_colorlight_d073d503bd25_power, OFF)
+    sendCommand(lifx_colorlight_d073d503be21_power, OFF)
+    sendCommand(lifx_colorlight_d073d503be6b_power, OFF)
+    Thread.sleep(500)
+    sendCommand(lifx_colorlight_d073d502f5aa_power, ON)
+    sendCommand(lifx_colorlight_d073d502f675_power, ON)
+    sendCommand(lifx_colorlight_d073d502f67c_power, ON)
+    sendCommand(lifx_colorlight_d073d50352d9_power, ON)
+    sendCommand(lifx_colorlight_d073d50353f2_power, ON)
+    sendCommand(lifx_colorlight_d073d503ba98_power, ON)
+    sendCommand(lifx_colorlight_d073d503bd25_power, ON)
+    sendCommand(lifx_colorlight_d073d503be21_power, ON)
+    sendCommand(lifx_colorlight_d073d503be6b_power, ON)
+    Thread.sleep(500)
+    sendCommand(lifx_colorlight_d073d502f5aa_power, OFF)
+    sendCommand(lifx_colorlight_d073d502f675_power, OFF)
+    sendCommand(lifx_colorlight_d073d502f67c_power, OFF)
+    sendCommand(lifx_colorlight_d073d50352d9_power, OFF)
+    sendCommand(lifx_colorlight_d073d50353f2_power, OFF)
+    sendCommand(lifx_colorlight_d073d503ba98_power, OFF)
+    sendCommand(lifx_colorlight_d073d503bd25_power, OFF)
+    sendCommand(lifx_colorlight_d073d503be21_power, OFF)
+    sendCommand(lifx_colorlight_d073d503be6b_power, OFF)
+    Thread.sleep(500)
+    sendCommand(lifx_colorlight_d073d502f5aa_power, ON)
+    sendCommand(lifx_colorlight_d073d50352d9_power, ON)
+    sendCommand(lifx_colorlight_d073d50353f2_power, ON)
+    sendCommand(lifx_colorlight_d073d503bd25_power, ON)
+    sendCommand(lifx_colorlight_d073d503be21_power, ON)
+    
+    if (KjokkenBevegelse.state == ON) {
+        sendCommand(lifx_colorlight_d073d503ba98_power, ON)
+        sendCommand(lifx_colorlight_d073d502f67c_power, ON)
+    }
+    if (benqprojector_projector_5ad721d1_power.state == OFF) {
+        sendCommand(lifx_colorlight_d073d503be6b_power, ON)
+        sendCommand(lifx_colorlight_d073d502f675_power, ON)
+    }
+    
+    sendCommand(artnet_node_fbf96f11_color, OFF)
+    sendCommand(artnet_node_f7c49632_color, OFF)
+
+end
+
+
+rule "switch channel"
+when
+Item sonos_CONNECT_RINCON_000E58A4514001400_control changed from PAUSE to PLAY
+or sonos_CONNECT_RINCON_000E58A4514001400_control changed from NULL to PLAY
+then
+sendCommand(receivernadt748_receiver_45ec6c0c_source, 6)
+end
+
+//#sonos_CONNECT_RINCON_000E58A4514001400_currentartist (Type=StringItem, State=Zeds Dead, Label=Current Artist, Category=null)#
+
+rule "no more Hanson"
+when
+Item sonos_CONNECT_RINCON_000E58A4514001400_currentartist received update
+then
+if(sonos_CONNECT_RINCON_000E58A4514001400_currentartist.state == "Hanson"){
+//sendCommand(receivernadt748_receiver_45ec6c0c_mute, ON)
+sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_mute, ON)
+sendCommand(sonos_CONNECTAMP_RINCON_000E58D378A401400_mute, ON)
+hanson = true;
+}
+if(sonos_CONNECT_RINCON_000E58A4514001400_currentartist.state != "Hanson" && hanson == true){
+hanson = false
+sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_mute, OFF))
+sendCommand(sonos_CONNECTAMP_RINCON_000E58D378A401400_mute, OFF))
+sendCommand(receivernadt748_receiver_45ec6c0c_mute, OFF)
+}
+end
+
+rule "switch channel2"
+when
+Item sonos_CONNECT_RINCON_000E58A4514001400_control changed from PLAY to PAUSE
+or sonos_CONNECT_RINCON_000E58A4514001400_control changed from PLAY to NULL
+then
+sendCommand(receivernadt748_receiver_45ec6c0c_source, 1)
+end
+
+rule "kjøkken motion"
+when
+    Item KjokkenBevegelse received command
+then
+    if (receivedCommand == ON && kjokkenpaa == false) {
+        sendCommand(artnet_node_fbf96f11_color, ON)
+        sendCommand(artnet_node_f7c49632_color, ON)
+        sendCommand(lifx_colorlight_d073d503ba98_power, ON)
+        sendCommand(lifx_colorlight_d073d502f67c_power, ON)
+        sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_add, new StringType("RINCON_000E58D378A401400"))
+        kjokkenpaa = true
+    }
+    else if (receivedCommand == OFF) {
+        motion_2++
+        Thread.sleep(30000)
+        motion_2--
+        if (motion_2 == 0 && KjokkenBevegelse.state == OFF) {
+            sendCommand(artnet_node_fbf96f11_color, OFF)
+            sendCommand(artnet_node_f7c49632_color, OFF)
+            sendCommand(lifx_colorlight_d073d503ba98_transition_time, new DecimalType(5000.0))
+            sendCommand(lifx_colorlight_d073d503ba98_power, OFF)
+            sendCommand(lifx_colorlight_d073d502f67c_transition_time, new DecimalType(5000.0))
+            sendCommand(lifx_colorlight_d073d502f67c_power, OFF)
+            sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_remove, new StringType("RINCON_000E58D378A401400"))
+            kjokkenpaa = false
+        }
+    }
+    
+end
+
+
+rule "sonos switch"
+when
+ Item EnOceanStor received command
+then
+    if (receivedCommand == ON && lifx_colorlight_d073d503be6b_power.state == OFF) {
+        sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_add, new StringType("RINCON_000E58D378A401400"))
+    }
+    else if (receivedCommand == OFF && lifx_colorlight_d073d503be6b_power.state == ON) {
+        sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_remove, new StringType("RINCON_000E58D378A401400"))
+    }
+end
+
+rule "lys_av_paa2"
+when
+    Item EnOceanStor received command or
+    Item EnOceanStor2 received command
+then
+  //  sendCommand(lifx_colorlight_d073d50352d9_power, receivedCommand) //gang 1
+  //  sendCommand(lifx_colorlight_d073d503be21_power, receivedCommand) // gang 2
+  //  sendCommand(lifx_colorlight_d073d50353f2_power, receivedCommand) // stuegang
+  //  sendCommand(lifx_colorlight_d073d503ba98_power, receivedCommand) // Kjøkken 1
+  //  sendCommand(lifx_colorlight_d073d502f67c_power, receivedCommand) // Kjøkken 2
+  if (receivedCommand == ON) {
+        sendCommand(artnet_node_4ec044e3_color, INCREASE)
+  else {
+        sendCommand(artnet_node_4ec044e3_color, DECREASE)
+  }
+    //sendCommand(artnet_node_fbf96f11_color, receivedCommand)
+end
+
+
+rule "lys_av_paa" 
+when
+    Item EnOceanStor received command or
+    Item LysStue received command 
+then
+    var level = lifx_colorlight_d073d502f675_color.state as HSBType
+    
+    if (receivedCommand == ON && lifx_colorlight_d073d503be6b_power.state == ON) {
+        sendCommand(lifx_colorlight_d073d503be6b_color, new PercentType(100))//  stue 3
+        sendCommand(lifx_colorlight_d073d502f675_color, new PercentType(100)) // Stue 2
+        sendCommand(lifx_colorlight_d073d503bd25_color, new PercentType(100)) // stue 1
+        sendCommand(lifx_colorlight_d073d502f5aa_color, new PercentType(100)) // stuePc
+    }
+    else if (receivedCommand == OFF && level.getBrightness().intValue() > 90) {
+        sendCommand(lifx_colorlight_d073d503be6b_color, new PercentType(20))//  stue 3
+        sendCommand(lifx_colorlight_d073d502f675_color, new PercentType(20)) // Stue 2
+        sendCommand(lifx_colorlight_d073d503bd25_color, new PercentType(20)) // stue 1
+        sendCommand(lifx_colorlight_d073d502f5aa_color, new PercentType(20)) // stuePc
+    }
+    else {
+        sendCommand(lifx_colorlight_d073d503be6b_power, receivedCommand)//  stue 3
+        sendCommand(lifx_colorlight_d073d502f675_power, receivedCommand) // Stue 2
+        sendCommand(lifx_colorlight_d073d503bd25_power, receivedCommand) // stue 1
+        sendCommand(lifx_colorlight_d073d502f5aa_power, receivedCommand) // stuePc
+        sendCommand(artnet_node_466088ca_color, receivedCommand)
+    }
+    //
+    //sendCommand(artnet_node_f7c49632_color, receivedCommand)  
+end
+

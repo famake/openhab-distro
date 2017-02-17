@@ -1,0 +1,9 @@
+sitemap mikki label="HomeControl"
+{
+    Frame label="Lys" {
+        Switch item=LysStue
+        Setpoint item=fatimer minValue=0 maxValue=3600 step=30
+        Text item=timeLeft
+    }
+}
+    
