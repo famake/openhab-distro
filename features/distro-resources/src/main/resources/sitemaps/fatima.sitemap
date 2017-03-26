@@ -1,0 +1,10 @@
+sitemap fatima label="Test"
+{
+    Frame label="EnOcean" {
+        Text item=EnOceanTemp
+        Switch item=timerActive
+        Setpoint item=fatimer minValue=0 maxValue=3600 step=30
+        Text item=timeLeft
+    }
+}
+    
