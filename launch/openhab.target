@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="openHAB Target Platform" sequenceNumber="161">
+<?pde version="3.8"?><target name="openHAB Target Platform" sequenceNumber="166">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.smarthome.feature.runtime.core.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.smarthome.feature.runtime.binding.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.smarthome.feature.runtime.console.equinox.feature.group" version="0.0.0"/>
@@ -13,7 +13,7 @@
 <unit id="org.eclipse.equinox.sdk.feature.group" version="3.10.2.v20150204-1316"/>
 <repository location="http://download.eclipse.org/releases/luna/201502271000"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.openhab.feature.p2.feature.group" version="0.0.0"/>
 <repository location="https://dl.bintray.com/openhab/p2/openhab-core/2.0.0.x"/>
 </location>
@@ -22,5 +22,6 @@
 <unit id="org.openhab.deps.test.feature.group" version="0.0.0"/>
 <repository location="https://dl.bintray.com/openhab/p2/openhab-deps-repo/1.0.11"/>
 </location>
+<location path="C:\Users\Mikael\openhab2-master3" type="Directory"/>
 </locations>
 </target>
