@@ -22,3 +22,11 @@ Number timeLeft "Tid igjen [%s]"
 //Group 
 
 Switch hjemme "Hjemme"
+Switch alleLys "Alle lys"
+
+Number ool "Øl:  [%d]"
+Switch nullOol "Null øllteller"
+Switch enTil "Telle øllteller"
+
+
+Switch kjokkenPaaIkkeAv "kjøkken på ikke av"

@@ -9,7 +9,10 @@ then
         if (time2 <= 0) {
             postUpdate(timeLeft, fatimer.state)
             postUpdate(timerActive, OFF)
-            // Alarm
+            // Alarm    
+            
+            say("Maten er klar!")
+            
             sendCommand(artnet_node_fbf96f11_color, ON)
             Thread.sleep(200)
             sendCommand(artnet_node_fbf96f11_color, OFF)
@@ -47,4 +50,178 @@ when
     System started
 then
     postUpdate(fatimer, 600)
+end
+
+rule "nulllele"
+when
+    Item nullOol received command
+then
+    if (receivedCommand == ON) {
+        postUpdate(ool, 0)
+        postUpdate(nullOol, OFF)
+    }
+end
+
+rule "telle"
+when
+    Item enTil received command
+then
+    if (receivedCommand == ON) {
+        var Number oolX = ool.state as DecimalType
+        postUpdate(ool, oolX + 1)
+        postUpdate(enTil, OFF)
+        if (oolX.toString().equals("0")) {
+        say("pow pow pow øl null")
+        }
+        else if (oolX.toString().equals("1")) {
+            say("pow pow pow øl en")
+        }
+        else if (oolX.toString().equals("2")) {
+            say("pow pow pow øl to")
+        }
+        else if (oolX.toString().equals("3")) {
+            say("pow pow pow øl tre")
+        }
+        else if (oolX.toString().equals("4")) {
+            say("pow pow pow øl fire")
+        }
+        else if (oolX.toString().equals("5")) {
+            say("pow pow pow øl fem")
+        }
+        else if (oolX.toString().equals("6")) {
+            say("pow pow pow øl sex")
+        }
+        else if (oolX.toString().equals("7")) {
+            say("pow pow pow øl syv")
+        }
+        else if (oolX.toString().equals("8")) {
+            say("pow pow pow øl åtte")
+        }
+        else if (oolX.toString().equals("9")) {
+            say("pow pow pow øl ni")
+        }
+        else if (oolX.toString().equals("10")) {
+            say("pow pow pow øl ti")
+        }
+        else if (oolX.toString().equals("11")) {
+            say("pow pow pow øl elleve")
+        }
+        else if (oolX.toString().equals("12")) {
+            say("pow pow pow øl tolv")
+        }
+        else if (oolX.toString().equals("13")) {
+            say("pow pow pow øl tretten")
+        }
+        else if (oolX.toString().equals("14")) {
+            say("pow pow pow øl fjorten")
+        }
+        else if (oolX.toString().equals("15")) {
+            say("pow pow pow øl femten")
+        }
+        else if (oolX.toString().equals("16")) {
+            say("pow pow pow øl kirsten")
+        }
+        else if (oolX.toString().equals("17")) {
+            say("pow pow pow øl søtten")
+        }
+        else if (oolX.toString().equals("18")) {
+            say("pow pow pow øl atten")
+        }
+        else if (oolX.toString().equals("19")) {
+            say("pow pow pow øl nitten")
+        }
+        else if (oolX.toString().equals("20")) {
+            say("pow pow pow øl tyve")
+        }
+        else if (oolX.toString().equals("21")) {
+            say("pow pow pow øl tjueen")
+        }
+        else if (oolX.toString().equals("22")) {
+            say("pow pow pow øl tjueto")
+        }
+        else if (oolX.toString().equals("23")) {
+            say("pow pow pow øl tjuetre")
+        }
+        else if (oolX.toString().equals("24")) {
+            say("pow pow pow øl tjuefire")
+        }
+        else if (oolX.toString().equals("25")) {
+            say("pow pow pow øl tjuefem")
+        }
+        else if (oolX.toString().equals("26")) {
+            say("pow pow pow øl tjueseks")
+        }
+        else if (oolX.toString().equals("27")) {
+            say("pow pow pow øl tjuesyv")
+        }
+        else if (oolX.toString().equals("28")) {
+            say("pow pow pow øl tjueåtte")
+        }
+        else if (oolX.toString().equals("29")) {
+            say("pow pow pow øl tjueni")
+        }
+        else if (oolX.toString().equals("30")) {
+            say("pow pow pow øl tretti")
+        }
+        else if (oolX.toString().equals("31")) {
+            say("pow pow pow øl trettien")
+        }
+        else if (oolX.toString().equals("32")) {
+            say("pow pow pow øl trettito")
+        }
+        else if (oolX.toString().equals("33")) {
+            say("pow pow pow øl trettitre")
+        }
+        else if (oolX.toString().equals("34")) {
+            say("pow pow pow øl trettifire")
+        }
+        else if (oolX.toString().equals("35")) {
+            say("pow pow pow øl trettifem")
+        }
+        else if (oolX.toString().equals("36")) {
+            say("pow pow pow øl trettiseks")
+        }
+        else if (oolX.toString().equals("37")) {
+            say("pow pow pow øl trettisyv")
+        }
+        else if (oolX.toString().equals("38")) {
+            say("pow pow pow øl trettiåtte")
+        }
+        else if (oolX.toString().equals("39")) {
+            say("pow pow pow øl trettini")
+        }
+        else if (oolX.toString().equals("40")) {
+            say("pow pow pow øl førti")
+        }
+        else if (oolX.toString().equals("41")) {
+            say("pow pow pow øl førtien")
+        }
+        else if (oolX.toString().equals("42")) {
+            say("pow pow pow øl førtito")
+        }
+        else if (oolX.toString().equals("43")) {
+            say("pow pow pow øl førtitre")
+        }
+        else if (oolX.toString().equals("44")) {
+            say("pow pow pow øl førtifire")
+        }
+        else if (oolX.toString().equals("45")) {
+            say("pow pow pow øl førtifem")
+        }
+        else if (oolX.toString().equals("46")) {
+            say("pow pow pow øl førtiseks")
+        }
+        else if (oolX.toString().equals("47")) {
+            say("pow pow pow øl førtisyv")
+        }
+        else if (oolX.toString().equals("48")) {
+            say("pow pow pow øl førtiåtte")
+        }
+        else if (oolX.toString().equals("49")) {
+            say("pow pow pow øl førtini")
+        }
+        else {
+            say(oolX.toString())
+        }
+    }
 end

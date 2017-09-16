@@ -1,10 +1,19 @@
 sitemap fatima label="Test"
 {
+    Frame label="Hus" {
+        Switch item=hjemme
+        Switch item=alleLys
+        Switch item=kjokkenPaaIkkeAv
+    }
     Frame label="EnOcean" {
         Text item=EnOceanTemp
         Switch item=timerActive
         Setpoint item=fatimer minValue=0 maxValue=3600 step=30
         Text item=timeLeft
     }
+    Frame label="Ølteller" {
+        Text item=ool
+        Switch item=nullOol
+        Switch item=enTil
+    }
 }
-    
