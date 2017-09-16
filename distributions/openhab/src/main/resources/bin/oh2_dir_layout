@@ -21,8 +21,12 @@ if [ -z ${OPENHAB_LOGDIR} ]; then
     export OPENHAB_LOGDIR="${OPENHAB_USERDATA}/logs"
 fi
 
+# Make sure the tmp folder exists as Karaf requires it
+if [ ! -d "${OPENHAB_USERDATA}/tmp" ]; then
+    mkdir "${OPENHAB_USERDATA}/tmp"
+fi
 
-export KARAF_HOME="${OPENHAB_RUNTIME}"
+
 export KARAF_DATA="${OPENHAB_USERDATA}"
 export KARAF_BASE="${OPENHAB_USERDATA}"
 export KARAF_ETC="${OPENHAB_USERDATA}/etc"

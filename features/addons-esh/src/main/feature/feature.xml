@@ -3,8 +3,16 @@
 
     <!-- binding -->
 
+    <feature name="openhab-binding-astro" description="Astro Binding" version="${project.version}">
+        <feature>esh-binding-astro</feature>
+    </feature>
+
     <feature name="openhab-binding-digitalstrom" description="digitalSTROM Binding" version="${project.version}">
         <feature>esh-binding-digitalstrom</feature>
+    </feature>
+
+    <feature name="openhab-binding-dmx" description="DMX Binding" version="${project.version}">
+        <feature>esh-binding-dmx</feature>
     </feature>
 
     <feature name="openhab-binding-hue" description="Hue Binding" version="${project.version}">
@@ -19,6 +27,10 @@
         <feature>esh-binding-lifx</feature>
     </feature>
 
+    <feature name="openhab-binding-lirc" description="LIRC Binding" version="${project.version}">
+        <feature>esh-binding-lirc</feature>
+    </feature>
+
     <feature name="openhab-binding-ntp" description="NTP Binding" version="${project.version}">
         <feature>esh-binding-ntp</feature>
     </feature>
@@ -28,6 +40,14 @@
         <config name="binding.sonos">
             opmlUrl = http://opml.radiotime.com/Describe.ashx?c=nowplaying&amp;partnerId=IAeIhU42&amp;id=%id&amp;serial=%serial
         </config>
+    </feature>
+
+    <feature name="openhab-binding-tradfri" description="Trådfri Binding" version="${project.version}">
+        <feature>esh-binding-tradfri</feature>
+    </feature>
+
+    <feature name="openhab-binding-weatherunderground" description="WeatherUnderground Binding" version="${project.version}">
+        <feature>esh-binding-weatherunderground</feature>
     </feature>
 
     <feature name="openhab-binding-wemo" description="Wemo Binding" version="${project.version}">
@@ -82,18 +102,17 @@
 
     <feature name="openhab-ui-basic" description="Basic UI" version="${project.version}">
         <feature>openhab-runtime-base</feature>
+        <bundle start-level="75">mvn:org.openhab.core/org.openhab.ui.basicui/${project.version}</bundle>
         <feature>esh-ui-basic</feature>
-        <bundle start-level="80">mvn:org.openhab.core/org.openhab.ui.basicui/${project.version}</bundle>
         <config name="org.eclipse.smarthome.basicui">
-            defaultSitemap = _default
             iconType = svg
         </config>
     </feature>
 
     <feature name="openhab-ui-classic" description="Classic UI" version="${project.version}">
         <feature>openhab-runtime-base</feature>
+        <bundle start-level="75">mvn:org.openhab.core/org.openhab.ui.classicui/${project.version}</bundle>
         <feature>esh-ui-classic</feature>
-        <bundle start-level="80">mvn:org.openhab.core/org.openhab.ui.classicui/${project.version}</bundle>
         <config name="org.eclipse.smarthome.classicui">
             defaultSitemap = _default
         </config>
@@ -101,8 +120,8 @@
 
     <feature name="openhab-ui-paper" description="Paper UI" version="${project.version}">
         <feature>openhab-runtime-base</feature>
+        <bundle start-level="75">mvn:org.openhab.core/org.openhab.ui.paperui/${project.version}</bundle>
         <feature>esh-ui-paper</feature>
-        <bundle start-level="80">mvn:org.openhab.core/org.openhab.ui.paperui/${project.version}</bundle>
     </feature>
 
 	<!-- misc -->
@@ -113,7 +132,7 @@
         <bundle>mvn:org.openhab.core/org.openhab.io.rest.docs/${project.version}</bundle>
     </feature>
 
-    <feature name="openhab-misc-marketplace" description="IoT Marketplace" version="${project.version}">
+    <feature name="openhab-misc-market" description="Eclipse IoT Market" version="${project.version}">
         <feature>openhab-runtime-base</feature>
         <feature>esh-extensionservice-marketplace</feature>
     </feature>
