@@ -1,27 +1,20 @@
 
 rule "lys_av_paa2"
 when
-    Item EnOceanStor received command or
     Item EnOceanStor2 received command
 then
-  //  sendCommand(lifx_colorlight_d073d50352d9_power, receivedCommand) //gang 1
-  //  sendCommand(lifx_colorlight_d073d503be21_power, receivedCommand) // gang 2
-  //  sendCommand(lifx_colorlight_d073d50353f2_power, receivedCommand) // stuegang
-  //  sendCommand(lifx_colorlight_d073d503ba98_power, receivedCommand) // Kjøkken 1
-  //  sendCommand(lifx_colorlight_d073d502f67c_power, receivedCommand) // Kjøkken 2
   if (receivedCommand == ON) {
-        sendCommand(artnet_node_4ec044e3_color, INCREASE)
-  else {
-        sendCommand(artnet_node_4ec044e3_color, DECREASE)
+        sendCommand(artnet_node_591a5b8d_color, INCREASE)
   }
-    //sendCommand(artnet_node_fbf96f11_color, receivedCommand)
+  else {
+        sendCommand(artnet_node_591a5b8d_color, DECREASE)
+  }
 end
 
 
 rule "lys_av_paa" 
 when
-    Item EnOceanStor received command or
-    Item EnOceanStor3 received command 
+    Item LysStue received command 
 then
     var level = lifx_colorlight_d073d502f675_color.state as HSBType
     
@@ -45,4 +38,20 @@ then
     }
     //
     //sendCommand(artnet_node_f7c49632_color, receivedCommand)  
+end
+
+rule "testregel"
+when
+    Item EnOceanStor received command
+then
+        var alarmTid = now.plusMinutes(1)
+        var minutterSomHarGaatt = ((now.getMillis() - alarmTid.getMillis()) / 60000.0) + 10
+        var lydbas = Math.min(50, minutterSomHarGaatt + 15)
+        var stuebas = Math.min(100,lydbas*2+20)
+        sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_volume, stuebas) // Stue
+        sendCommand(sonos_CONNECTAMP_RINCON_000E58D378A401400_volume, lydbas) // Kjøkken
+        sendCommand(sonos_CONNECTAMP_RINCON_000E58D377C601400_volume, lydbas) // Sove
+        sendCommand(alleLysFaderTid, 3000)
+        var vbv = Math.min(100, (minutterSomHarGaatt / 10.0) * 100)
+        sendCommand(lysNiv, vbv)
 end

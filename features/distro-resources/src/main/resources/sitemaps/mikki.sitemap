@@ -1,9 +1,53 @@
 sitemap mikki label="HomeControl"
 {
-    Frame label="Lys" {
-        Switch item=LysStue
-        Setpoint item=fatimer minValue=0 maxValue=3600 step=30
-        Text item=timeLeft
+    Frame label="Hus" {
+        Switch item=hjemme
+        Switch item=sov
+        Text item=EnOceanTemp label="Stuetemperatur"
     }
-}
+    Frame label="Lys" {
+        Switch item=alleLys
+        Switch item=ekstraLys
+        Slider item=lysNiv
+        Switch item=autoLys
+        Switch item=gangLys
+        Switch item=stueLys
+        Switch item=kjokLys
+        Switch item=sovLys
+        Slider item=artnet_node_591a5b8d_color label="Dart"
+        Switch item=kjokkenPaaIkkeAv
+    }
+    Frame label="Media" {
+        Switch item=receivernadt748_receiver_3473a7fa_power
+        Switch item=benqprojector_projector_e2848b70_power label="Projektor"
+        Slider item=sonos_CONNECT_RINCON_000E58A4514001400_volume label="Volum"
+    }
+    Frame label="Vekkerklokke" {
+        Switch item=alarm
+        Text item=stOppVis
+        Setpoint item=stOppTid minValue=0 maxValue=1440 step=15
+        Switch item=alarmLyd
+    }
     
+    
+    Frame label="Home" icon="house" {
+    Switch item=NestHome_away mappings=[home="Home",away="Away"]
+    Text item=NestCam_is_streaming
+    Text item=NestCam_is_online
+    Text item=NestCam_is_audio_input_enabled
+    Text item=NestCam_last_is_online_change
+    Text item=NestCam_is_video_history_enabled
+    Text item=NestCam_web_url
+    Text item=NestCam_app_url
+    Text item=NestCam_is_public_share_enabled
+    Text item=NestCam_last_event_image_url
+    Text item=NestCam_last_event_animated_image_url
+    Text item=NestCam_last_event_web_url
+  }
+
+
+
+
+
+    
+}

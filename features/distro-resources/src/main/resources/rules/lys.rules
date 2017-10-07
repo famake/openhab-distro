@@ -1,0 +1,190 @@
+var lysKmd = new PercentType(100) 
+var MIN_LYS = 11
+
+rule "Auto Lysniveau"
+when
+    Time cron "30 */10 * * * ?" or
+    Item autoLys changed to ON
+then
+    if (autoLys.state == ON) {
+        var klokka = new DateTime(now)
+        var sekund = klokka.getSecondOfDay()
+    
+        var FULL_SLUTT = 17
+        var NULL_START = 22.5
+        var MIDT_TIME = 13
+        // Variasjon med 1 enhet over:
+        var omr = (NULL_START - FULL_SLUTT) * 3600
+        var justerPrSek = 1.0 / omr
+        // Antall enheter ved kl 12 (litt over 1.0):
+        var toppkl12 = 1.0 + ((FULL_SLUTT - MIDT_TIME) * 3600.0 * justerPrSek)
+        
+        // Sekunder før / etter midt time
+        var tidParameter = Math.abs(3600*MIDT_TIME - sekund)
+        var lysBr = Math.min(1.0, Math.max(toppkl12 - tidParameter * justerPrSek, 0))
+        var lysstyrke = Math.max(lysBr * 100.0, MIN_LYS)
+        if (sov.state == ON) {
+            postUpdate(dagLysNiv, new PercentType(lysstyrke.intValue()))
+        }
+        else {
+            postUpdate(lysNiv, new PercentType(lysstyrke.intValue()))
+        }
+    }
+end
+
+
+rule "Lysniveau manuell"
+when
+    Item lysNiv received command
+then
+    postUpdate(autoLys, OFF)
+end
+
+rule "Sett lysa"
+when
+    Item ekstraLys changed or
+    Item kino received command or
+    Item lysNiv changed
+then
+    var lysstyrke = (lysNiv.state as Number).doubleValue()
+    var fargeTemp = 2500 + (5000.0 - 2500.0) * Math.max(lysstyrke - MIN_LYS, 0) / (100.0 - MIN_LYS)
+    
+    if (ekstraLys.state == ON) {
+        lysstyrke = Math.min(100.0, lysstyrke + 30)
+    }
+    if (kino.state == ON) {
+        lysstyrke = Math.min(30.0, lysstyrke)
+        sendCommand(artnet_node_ac628f60_color, OFF) // Over lerret
+    }
+    
+    sendCommand(alleLysFaderTid, 3000)
+    var colorTemp = fargeTemp
+    sendCommand(lifx_colorlight_d073d500ce26_color_temperature_buffered, colorTemp) // Soverom
+    sendCommand(lifx_colorlight_d073d502f675_color_temperature_buffered, colorTemp) // Stue 2
+    sendCommand(lifx_colorlight_d073d503be6b_color_temperature_buffered, colorTemp) // Stue 3
+    sendCommand(lifx_colorlight_d073d503bd25_color_temperature_buffered, colorTemp) // Stue 1
+    sendCommand(lifx_colorlight_d073d502f5aa_color_temperature_buffered, colorTemp) // Stue PC
+    sendCommand(lifx_colorlight_d073d503ba98_color_temperature_buffered, colorTemp) // Kjøkken 1
+    sendCommand(lifx_colorlight_d073d50352eb_color_temperature_buffered, colorTemp) // Kjøkken 2
+    sendCommand(lifx_colorlight_d073d50352d9_color_temperature_buffered, colorTemp) // Gang
+    sendCommand(lifx_colorlight_d073d503be21_color_temperature_buffered, colorTemp) // Gang
+    sendCommand(lifx_colorlight_d073d50353f2_color_temperature_buffered, colorTemp) // Gang
+    
+    lysKmd = new PercentType(lysstyrke as int) as PercentType
+    sendCommand(lifx_colorlight_d073d500ce26_color, lysKmd) // Soverom
+    sendCommand(lifx_colorlight_d073d502f675_color, lysKmd) // Stue 2
+    sendCommand(lifx_colorlight_d073d503be6b_color, lysKmd) // Stue 3
+    sendCommand(lifx_colorlight_d073d503bd25_color, lysKmd) // Stue 1
+    sendCommand(lifx_colorlight_d073d502f5aa_color, lysKmd) // Stue PC
+    sendCommand(lifx_colorlight_d073d503ba98_color, lysKmd) // Kjøkken 1
+    sendCommand(lifx_colorlight_d073d50352eb_color, lysKmd) // Kjøkken 2
+    sendCommand(lifx_colorlight_d073d50352d9_color, lysKmd) // Gang
+    sendCommand(lifx_colorlight_d073d503be21_color, lysKmd) // Gang
+    sendCommand(lifx_colorlight_d073d50353f2_color, lysKmd) // Gang
+    
+    //var hughes = new DecimalType(32 + 0.45 * lysstyrke)
+    //var sat = new PercentType((86 -lysstyrke*0.64) as int)
+    //var bright = new PercentType(Math.min(lysstyrke*0.95, 95) as int)
+
+    var PercentType bright = lysNiv.state
+    var colors = newArrayList()
+    if (stueLys.state == ON && kino.state == OFF) {
+        if(kjokLys.state == ON) {
+            colors = newArrayList(artnet_node_ac628f60_color, artnet_node_5f3dd8d4_color, artnet_node_ab393c1e_color)
+        }
+        else {
+            colors = newArrayList(artnet_node_ac628f60_color)
+        }
+    }
+    else {
+        if(kjokLys.state == ON) {
+            colors = newArrayList(artnet_node_5f3dd8d4_color, artnet_node_ab393c1e_color)
+        }
+        else {
+        }
+    }
+    colors.forEach[ element, index |
+        //var DecimalType hue2 = element.state.getHue()
+        //var PercentType sat = element.state.getSaturation() 
+        //var HSBType col2 = new HSBType(hue2, sat, bright)
+        sendCommand(element, bright ) // col2 as HSBType)
+    ]
+end
+
+rule "lys gang"
+when
+    Item gangLys received command
+then
+    sendCommand(lifx_colorlight_d073d50352d9_power, receivedCommand)
+    sendCommand(lifx_colorlight_d073d503be21_power, receivedCommand)
+end
+
+rule "lys kjøkken"
+when
+    Item kjokLys received command
+then
+    sendCommand(artnet_node_5f3dd8d4_color, receivedCommand)
+    sendCommand(artnet_node_ab393c1e_color, receivedCommand)
+    sendCommand(lifx_colorlight_d073d503ba98_power, receivedCommand)
+    sendCommand(lifx_colorlight_d073d50352eb_power, receivedCommand)
+end
+
+
+rule "lys stue"
+when
+    Item stueLys received command
+then
+    sendCommand(lifx_colorlight_d073d502f675_power, receivedCommand) // Stue 2
+    sendCommand(lifx_colorlight_d073d503be6b_power, receivedCommand) // Stue 3
+    sendCommand(lifx_colorlight_d073d503bd25_power, receivedCommand) // Stue 1
+    sendCommand(lifx_colorlight_d073d502f5aa_power, receivedCommand) // Stue PC
+    sendCommand(lifx_colorlight_d073d50353f2_power, receivedCommand) // Stue gang
+    sendCommand(artnet_node_ac628f60_color, receivedCommand) // Over lerret
+    sendCommand(artnet_node_591a5b8d_color, receivedCommand) // Dert
+end
+
+rule "lys sov"
+when
+    Item sovLys received command
+then
+    sendCommand(lifx_colorlight_d073d500ce26_power, receivedCommand)
+end
+
+rule "alle"
+when
+    Item alleLys received command
+then
+    sendCommand(gangLys, receivedCommand)
+    sendCommand(stueLys, receivedCommand)
+    sendCommand(sovLys, receivedCommand)
+    if (receivedCommand == OFF || kjokkenPaaIkkeAv.state == ON) {
+        sendCommand(kjokLys, receivedCommand)
+    }
+    
+    var colors = newArrayList(artnet_node_5f3dd8d4_color, artnet_node_ab393c1e_color, artnet_node_ac628f60_color)
+    var sat = new PercentType(40)
+    colors.forEach[ element, index |
+        var PercentType bright = lysNiv.state
+        var DecimalType hue2 = new DecimalType(360 * Math.random())
+        var HSBType col2 = new HSBType(hue2, sat, bright/2)
+        sendCommand(element, col2 as HSBType)
+    ]
+end
+
+rule "fadetimeAll"
+when
+    Item alleLysFaderTid received command
+then
+    sendCommand(lifx_colorlight_d073d500ce26_transition_time, receivedCommand) // Soverom
+    sendCommand(lifx_colorlight_d073d502f675_transition_time, receivedCommand) // Stue 2
+    sendCommand(lifx_colorlight_d073d503be6b_transition_time, receivedCommand) // Stue 3
+    sendCommand(lifx_colorlight_d073d503bd25_transition_time, receivedCommand) // Stue 1
+    sendCommand(lifx_colorlight_d073d502f5aa_transition_time, receivedCommand) // Stue PC
+    sendCommand(lifx_colorlight_d073d503ba98_transition_time, receivedCommand) // Kjøkken 1
+    sendCommand(lifx_colorlight_d073d50352eb_transition_time, receivedCommand) // Kjøkken 2
+    sendCommand(lifx_colorlight_d073d50352d9_transition_time, receivedCommand) // Gang
+    sendCommand(lifx_colorlight_d073d503be21_transition_time, receivedCommand) // Gang
+    sendCommand(lifx_colorlight_d073d50353f2_transition_time, receivedCommand) // Gang
+end
+
+

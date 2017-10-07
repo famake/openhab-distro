@@ -1,0 +1,18 @@
+
+rule "oppstart"
+when
+    System started
+then
+    postUpdate(alarm, ON)
+    postUpdate(stOppTid, 420)
+    postUpdate(alarmLyd, ON)
+    postUpdate(hjemme, ON)
+    postUpdate(lysNiv, 100)
+    postUpdate(ekstraLys, OFF)
+    postUpdate(autoLys, ON)
+    postUpdate(kino, OFF)
+    
+    // øl
+    postUpdate(ool, 0)
+    postUpdate(nullOol, OFF)
+end

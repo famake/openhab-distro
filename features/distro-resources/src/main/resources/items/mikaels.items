@@ -28,5 +28,72 @@ Number ool "Øl:  [%d]"
 Switch nullOol "Null øllteller"
 Switch enTil "Telle øllteller"
 
+Switch kjokkenPaaIkkeAv "Ikke slå av kjøkken"
 
-Switch kjokkenPaaIkkeAv "kjøkken på ikke av"
+Switch gangLys "Lys i gang"
+Switch stueLys "Stue lys"
+Switch kjokLys "Kjøkken lys"
+Switch sovLys "Soverom lys"
+
+Number alleLysFaderTid "Alle lys fade"
+
+Switch sov "Sovemodus"
+
+String stOppVis "Tid [%s]" <clock>
+Number stOppTid "Stå opp innen" <clock>
+Switch alarm "Vekkerklokke" <alarm>
+Switch alarmLyd "Lyd" <alarm>
+
+Dimmer lysNiv "Lysnivå"
+Dimmer dagLysNiv "Lysnivå dag" <light>
+Switch kino "Kinomodus"
+Switch autoLys "Automatisk lysnivå"
+Switch ekstraLys "Ekstra lys"
+
+/* Nest binding Items */
+
+DateTime Nest_last_connection "Last Nest Connection [%1$tm/%1$td %1$tH:%1$tM]" {nest="<[last_connection]"}
+
+/* Structures - change Home to your structure's name */
+
+String   NestHome_name "Name [%s]"                    {nest="=[structures(Home).name]"} // writeable as of 1.9
+String   NestHome_country_code "Country Code [%s]"    {nest="<[structures(Home).country_code]"}
+String   NestHome_postal_code "Postal Code [%s]"      {nest="<[structures(Home).postal_code]"}
+String   NestHome_time_zone "Time Zone [%s]"          {nest="<[structures(Home).time_zone]"}
+String   NestHome_away "Away [%s]"                    {nest="=[structures(Home).away]"}
+String   NestHome_structure_id "Structure Id [%s]"    {nest="<[structures(Home).structure_id]"}
+Switch   NestHome_rhr_enrollment "Rush Hour Rewards Enrollment [%s]" {nest="<[structures(Home).rhr_enrollment]"} // as of 1.9
+String   NestHome_co_alarm_state "Home CO [%s]"       {nest="<[structures(Home).co_alarm_state]"} // as of 1.9
+String   NestHome_smoke_alarm_state "Home Smoke [%s]" {nest="<[structures(Home).smoke_alarm_state]"} // as of 1.9
+
+
+/* Nest Cams (available as of openHAB 1.8) -- changing Dining Room to your Cam's name */
+
+String NestCam_device_id "Cam Device ID [%s]"                               {nest="<[cameras(Living Room).device_id]"}
+String NestCam_software_Version "Cam S/W Version [%s]"                      {nest="<[cameras(Living Room).software_version]"}
+String NestCam_where_id "Where ID [%s]"                                     {nest="<[cameras(Living Room).where_id]"} // as of 1.9
+String NestCam_where_name "Where Name [%s]"                                 {nest="<[cameras(Living Room).where_name]"} // as of 1.9
+
+String NestCam_name "Cam Name [%s]"                                         {nest="<[cameras(Living Room).name]"}
+String NestCam_name_long "Cam Name Long [%s]"                               {nest="<[cameras(Living Room).name_long]"}
+Switch NestCam_is_online "Cam Online [%s]"                                  {nest="<[cameras(Living Room).is_online]"}
+Switch NestCam_is_streaming "Cam Streaming [%s]"                            {nest="=[cameras(Living Room).is_streaming]"}
+Switch NestCam_is_audio_input_enabled "Cam Audio Input Enabled [%s]"        {nest="<[cameras(Living Room).is_audio_input_enabled]"}
+DateTime NestCam_last_is_online_change "Cam Last Online Change [%1$tm/%1$td %1$tH:%1$tM]" {nest="<[cameras(Living Room).last_is_online_change]"}
+Switch NestCam_is_video_history_enabled "Cam Video History Enabled [%s]"    {nest="<[cameras(Living Room).is_video_history_enabled]"}
+String NestCam_web_url "Cam Web URL [%s]"                                   {nest="<[cameras(Living Room).web_url]"}
+String NestCam_app_url "Cam App URL [%s]"                                   {nest="<[cameras(Living Room).app_url]"}
+Switch NestCam_is_public_share_enabled "Cam Public Share Enabled [%s]"      {nest="<[cameras(Living Room).is_public_share_enabled]"} // as of 1.9
+String NestCam_public_share_url "Cam Public Share Url [%s]"                 {nest="<[cameras(Living Room).public_share_url]"} // as of 1.9
+String NestCam_snapshot_url "Cam Snapshot URL [%s]"                         {nest="<[cameras(Living Room).snapshot_url]"} // as of 1.9
+/* All last_event.* binding config strings require a Nest Aware with Video History subscription */
+Switch NestCam_last_event_has_sound "Cam Last Event Has Sound [%s]"         {nest="<[cameras(Living Room).last_event.has_sound]"}
+Switch NestCam_last_event_has_motion "Cam Last Event Has Motion [%s]"       {nest="<[cameras(Living Room).last_event.has_motion]"}
+Switch NestCam_last_event_has_person "Cam Last Event Has Person [%s]"       {nest="<[cameras(Living Room).last_event.has_person]"}
+DateTime NestCam_last_event_start_time "Cam Last Event Start Time [%1$tm/%1$td %1$tH:%1$tM]" {nest="<[cameras(Living Room).last_event.start_time]"}
+DateTime NestCam_last_event_end_time "Cam Last Event End Time [%1$tm/%1$td %1$tH:%1$tM]" {nest="<[cameras(Living Room).last_event.end_time]"}
+DateTime NestCam_last_event_urls_expire_time "Cam Last Event URLs Expire Time [%1$tm/%1$td %1$tH:%1$tM]" {nest="<[cameras(Living Room).last_event.urls_expire_time]"}
+String NestCam_last_event_web_url "Cam Last Event Web URL [%s]"             {nest="<[cameras(Living Room).last_event.web_url]"}
+String NestCam_last_event_app_url "Cam Last Event App URL [%s]"             {nest="<[cameras(Living Room).last_event.app_url]"}
+String NestCam_last_event_image_url "Cam Last Event Image Url [%s]"         {nest="<[cameras(Living Room).last_event.image_url]"}
+String NestCam_last_event_animated_image_url "Cam Last Event Animated Image URL [%s]" {nest="<[cameras(Living Room).last_event.animated_image_url]"}

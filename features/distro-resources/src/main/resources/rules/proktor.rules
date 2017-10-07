@@ -2,21 +2,7 @@ var var_paa = true
 
 rule "prosjektomatic"
 when
-    Item benqprojector_projector_5ad721d1_power received command
+    Item benqprojector_projector_e2848b70_power received command
 then
-    if (receivedCommand == ON) {
-        var_paa = (lifx_colorlight_d073d503be6b_power.state == ON)
-        //sendCommand(lifx_colorlight_d073d503be6b_transition_time, new DecimalType(25000.0))
-        sendCommand(lifx_colorlight_d073d503be6b_power, OFF)
-        //sendCommand(lifx_colorlight_d073d502f675_transition_time, new DecimalType(25000.0))
-        sendCommand(lifx_colorlight_d073d502f675_power, OFF)
-        sendCommand(artnet_node_466088ca_color, OFF)
-    }
-    else {
-        if (var_paa && (now.getHourOfDay() > 7 || now.getHourOfDay() < 2)) {
-            sendCommand(lifx_colorlight_d073d503be6b_power, ON)
-            sendCommand(lifx_colorlight_d073d502f675_power, ON)
-            sendCommand(artnet_node_466088ca_color, ON)
-        }
-    }
+    sendCommand(kino, receivedCommand)
 end

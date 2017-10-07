@@ -1,0 +1,92 @@
+var alarmTid = now
+var preAlarmTid = now
+var preAlarmTrig = false
+var alarmFlagg = false
+var FOR_ALARM_MIN = 30
+
+
+rule "Sett alarm"
+when
+    Item stOppTid received update or
+    Item alarm changed to ON or
+    System started
+then
+    // Alarm med bare minutter, eksempel: https://github.com/openhab/openhab/wiki/AlarmClock
+    alarmTid = now.withTimeAtStartOfDay()
+    alarmTid = alarmTid.plusMinutes((stOppTid.state as Number).intValue())
+    if (alarmTid.isBefore(now)) {
+        alarmTid = alarmTid.plusDays(1)
+    }
+    preAlarmTid = alarmTid.minusMinutes(FOR_ALARM_MIN)
+    postUpdate(stOppVis, alarmTid.toLocalTime().toString("HH:mm"))
+    preAlarmTrig = false
+    alarmFlagg = false
+end
+
+
+rule "Alarmen går"
+when 
+    Time cron "0 * * * * ?"
+then
+    if (preAlarmTrig && alarm.state == ON) {
+        if (kjokLys.state == OFF) { 
+            sendCommand(kjokLys, ON)
+        }
+        if (alleLys.state == OFF) { 
+            sendCommand(alleLys, ON)
+        }
+        var minutterSomHarGaatt = ((now.getMillis() - alarmTid.getMillis()) / 60000.0) + FOR_ALARM_MIN
+        var lin = (minutterSomHarGaatt / FOR_ALARM_MIN)
+        var annen = Math.pow(lin, 2)
+        var lydbas = Math.min(50, annen * FOR_ALARM_MIN + 15)
+        var stuebas = Math.min(100,annen * FOR_ALARM_MIN*2+20)
+        sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_volume, stuebas) // Stue
+        sendCommand(sonos_CONNECTAMP_RINCON_000E58D378A401400_volume, lydbas) // Kjøkken
+        sendCommand(sonos_CONNECTAMP_RINCON_000E58D377C601400_volume, lydbas) // Sove
+        sendCommand(alleLysFaderTid, 3000)
+        var vbv = Math.min(100, annen * 100)
+        sendCommand(lysNiv, vbv)
+    }
+    if (!preAlarmTrig && alarm.state == ON && now.isAfter(preAlarmTid)) {
+        preAlarmTrig = true
+        alarmFlagg = true
+        sendCommand(lysNiv, 0)
+        sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_volume, 15) // Stue
+        sendCommand(sonos_CONNECTAMP_RINCON_000E58D378A401400_volume, 15) // Kjøkken
+        sendCommand(sonos_CONNECTAMP_RINCON_000E58D377C601400_volume, 15) // Sove
+        
+        // Legg til soverom til gruppen til stue /-- stue                soverom --\
+        sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_add, new StringType("RINCON_000E58D377C601400"))
+        
+        sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_playlist, "Stå opp")
+    }
+    else if (preAlarmTrig && alarm.state == ON && now.isAfter(preAlarmTid.plusMinutes(5))) {
+        preAlarmTid = preAlarmTid.plusDays(1)
+    }
+    else if (alarm.state == ON && now.isAfter(alarmTid)) {
+        preAlarmTrig = false
+        alarmTid = alarmTid.plusDays(1)
+        if (now.getDayOfWeek() == 4) {
+            postUpdate(alarm, ON)
+        } else {
+            postUpdate(alarm, OFF)
+        }
+        postUpdate(sov, OFF)
+    }
+end
+
+rule "Sovemodus på av"
+when
+    Item sov changed to ON
+then
+    sendCommand(alleLys, OFF)
+end
+
+rule "Sovemodus på av"
+when
+    Item sov changed to OFF
+then
+    postUpdate(lysNiv, dagLysNiv.state)
+    sendCommand(alleLys, ON)
+end
+
