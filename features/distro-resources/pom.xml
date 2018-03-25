@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>org.openhab.distro</groupId>
 		<artifactId>pom-features</artifactId>
-		<version>2.2.0-SNAPSHOT</version>
+		<version>2.3.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>distro-resources</artifactId>
@@ -52,11 +51,6 @@
 						</goals>
 						<configuration>
 							<artifacts>
-								<artifact><file>src/main/resources/etc/addons-minimal.cfg</file><type>cfg</type><classifier>addons-minimal</classifier></artifact>
-								<artifact><file>src/main/resources/etc/addons-simple.cfg</file><type>cfg</type><classifier>addons-simple</classifier></artifact>
-								<artifact><file>src/main/resources/etc/addons-standard.cfg</file><type>cfg</type><classifier>addons-standard</classifier></artifact>
-								<artifact><file>src/main/resources/etc/addons-expert.cfg</file><type>cfg</type><classifier>addons-expert</classifier></artifact>
-								<artifact><file>src/main/resources/etc/addons-demo.cfg</file><type>cfg</type><classifier>addons-demo</classifier></artifact>
 								<artifact><file>src/main/resources/items/demo.items</file><type>cfg</type><classifier>items</classifier></artifact>
 								<artifact><file>src/main/resources/sitemaps/demo.sitemap</file><type>cfg</type><classifier>sitemaps</classifier></artifact>
 								<artifact><file>src/main/resources/things/demo.things</file><type>cfg</type><classifier>things</classifier></artifact>
