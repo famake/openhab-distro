@@ -140,7 +140,7 @@ then
     sendCommand(lifx_colorlight_d073d502f5aa_power, receivedCommand) // Stue PC
     sendCommand(lifx_colorlight_d073d50353f2_power, receivedCommand) // Stue gang
     sendCommand(artnet_node_ac628f60_color, receivedCommand) // Over lerret
-    sendCommand(artnet_node_591a5b8d_color, receivedCommand) // Dert
+    sendCommand(dart, receivedCommand) // Dert
 end
 
 rule "lys sov"
@@ -185,6 +185,14 @@ then
     sendCommand(lifx_colorlight_d073d50352d9_transition_time, receivedCommand) // Gang
     sendCommand(lifx_colorlight_d073d503be21_transition_time, receivedCommand) // Gang
     sendCommand(lifx_colorlight_d073d50353f2_transition_time, receivedCommand) // Gang
+end
+
+rule "dart lys"
+when
+    Item dart received command
+then
+    sendCommand(DartLaser, receivedCommand)
+    sendCommand(daaaaart, receivedCommand)
 end
 
 

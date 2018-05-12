@@ -9,7 +9,7 @@ then
     postUpdate(hjemme, ON)
     postUpdate(lysNiv, 100)
     postUpdate(ekstraLys, OFF)
-    postUpdate(autoLys, ON)
+    postUpdate(autoLys, OFF)
     postUpdate(kino, OFF)
     
     // øl

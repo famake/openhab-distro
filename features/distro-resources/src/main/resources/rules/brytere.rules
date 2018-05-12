@@ -3,11 +3,13 @@ rule "lys_av_paa2"
 when
     Item EnOceanStor2 received command
 then
+  sendCommand(dart, receivedCommand)
   if (receivedCommand == ON) {
-        sendCommand(artnet_node_591a5b8d_color, INCREASE)
-  }
-  else {
-        sendCommand(artnet_node_591a5b8d_color, DECREASE)
+    
+        var PercentType bright = lysNiv.state
+        var DecimalType hue2 = new DecimalType(360 * Math.random())
+        var HSBType col2 = new HSBType(hue2, new PercentType(20), bright/2)
+        sendCommand(artnet_node_591a5b8d_color, col2 as HSBType)
   }
 end
 

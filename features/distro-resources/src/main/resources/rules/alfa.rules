@@ -5,7 +5,7 @@ var cond_86880 = false
 var kjokkenpaa = false
 var hanson = false
 
-rule "kommer hjem"
+rule "alle lys"
 when
     Item alleLys changed to ON
 then
@@ -22,7 +22,7 @@ then
 end
 
 
-rule "kommer hjem"
+rule "alle lys"
 when
     Item alleLys changed to OFF
 then
@@ -137,5 +137,18 @@ then
     }
     else {
         sendCommand(sonos_CONNECT_RINCON_000E58A4514001400_remove, new StringType("RINCON_000E58D377C601400"))
+    }
+end
+
+
+rule "nest away"
+when 
+    Item nest_structure_358f7cac__6gEOjEslEePjsy7RUDzHTp9VRUE5If7wM5O8hDKzezdn351lH29cQ_away changed
+then
+    if (nest_structure_358f7cac__6gEOjEslEePjsy7RUDzHTp9VRUE5If7wM5O8hDKzezdn351lH29cQ_away.state == OFF) {
+        sendCommand(hjemme, OFF)
+    }
+    else {
+        sendCommand(hjemme, ON)
     }
 end
